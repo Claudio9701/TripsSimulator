@@ -41,3 +41,9 @@ The output of the simulation will be a list of trips with the following informat
 [Visualization of trips in Kepler.gl:](https://simpletrips.netlify.app/)
 
 ![Simulation](images/viz.gif)
+
+## Related links
+
+- [Routing, speed imputation, and travel times in OSMnx](https://github.com/gboeing/osmnx-examples/blob/v0.13.0/notebooks/02-routing-speed-time.ipynb)
+- [GAMA Platform Road Traffic](https://gama-platform.org/wiki/RoadTrafficModel)
+- [Trips Viz in Deck.gl](https://deck.gl/examples/trips-layer)
