@@ -38,6 +38,6 @@ The output of the simulation will be a list of trips with the following informat
 - Path: list of coordinates (lat, lon)
 - Timestamps: list of unix timestamps (one for each coordinate)
 
-Visualization of trips in Kepler.gl:
+[Visualization of trips in Kepler.gl:](https://simpletrips.netlify.app/)
 
 ![Simulation](images/viz.gif)
