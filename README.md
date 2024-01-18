@@ -3,7 +3,7 @@
 This project is a learning exercise that uses the OSMnx library to simulate daily commuting trips of people in a city. The simulation is based on a simplified set of real-world data and assumptions about human behavior, making it a great starting point for understanding urban mobility patterns.
 
 <div align=center>
-  <img  src="images/viz.gif" width="50%">
+  <img  src="images/viz.gif" width="80%">
   <br><br>
 </div>
 
