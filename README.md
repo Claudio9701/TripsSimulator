@@ -1,5 +1,15 @@
 # Simple Trips Simulation using OSMnx
 
+This project is a learning exercise that uses the OSMnx library to simulate daily commuting trips of people in a city. The simulation is based on a simplified set of real-world data and assumptions about human behavior, making it a great starting point for understanding urban mobility patterns.
+
+Please note that this is a simple project made for learning purposes. It does not take into account all the necessary variables and assumptions for building a realistic simulation software. For example, factors like varying travel speeds, traffic congestion, and individual preferences are not considered in this project.
+
+Our simulation focuses an area of the city of Lima, Peru, but the principles and methods used can be applied to any urban area. The simulation takes into account factors such as population density, zoning, and typical commuting times to generate basic trip data.
+
+This project can be a useful learning tool for students, researchers, and anyone else interested in urban mobility Read on to learn more about how the simulation works, what data it uses, and how to interpret the results. Remember, this is a simplified model and the results should be interpreted with that in mind.
+
+## Configuration
+
 To build a a simple Trips simulation we need to set a few initial parameters:
 
 - Number of people in the simulation, we will use the population density to calculate this.
