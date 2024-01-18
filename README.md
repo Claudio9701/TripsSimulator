@@ -1,12 +1,25 @@
 # Simple Trips Simulation using OSMnx
 
-This project is a learning exercise that uses the OSMnx library to simulate daily commuting trips of people in a city. The simulation is based on a simplified set of real-world data and assumptions about human behavior, making it a great starting point for understanding urban mobility patterns.
 
-Please note that this is a simple project made for learning purposes. It does not take into account all the necessary variables and assumptions for building a realistic simulation software. For example, factors like varying travel speeds, traffic congestion, and individual preferences are not considered in this project.
 
-Our simulation focuses an area of the city of Lima, Peru, but the principles and methods used can be applied to any urban area. The simulation takes into account factors such as population density, zoning, and typical commuting times to generate basic trip data.
+<!-- Div with two columns -->
+<div style="display:flex">
+  <div style="flex:50%;padding:5px">
+  <p>
+  This project is a learning exercise that uses the OSMnx library to simulate daily commuting trips of people in a city. The simulation is based on a simplified set of real-world data and assumptions about human behavior, making it a great starting point for understanding urban mobility patterns.
+  <br><br>
+    Our simulation focuses an area of the city of Lima, Peru, but the principles and methods used can be applied to any urban area. The simulation takes into account factors such as population density, zoning, and typical commuting times to generate basic trip data.
+    <br><br>
+    This project can be a useful learning tool for students, researchers, and anyone else interested in urban mobility Read on to learn more about how the simulation works, what data it uses, and how to interpret the results. Remember, this is a simplified model and the results should be interpreted with that in mind.
+    </p>
+  </div>
+  <div style="flex:50%;padding:5px">
+    <img src="images/viz.gif">
+  </div>
+</div>
 
-This project can be a useful learning tool for students, researchers, and anyone else interested in urban mobility Read on to learn more about how the simulation works, what data it uses, and how to interpret the results. Remember, this is a simplified model and the results should be interpreted with that in mind.
+> [!NOTE]  
+> Please note that this is a simple project made for learning purposes. It does not take into account all the necessary variables and assumptions for building a realistic simulation software. For example, factors like varying travel speeds, traffic congestion, and individual preferences are not considered in this project.
 
 ## Configuration
 
@@ -47,10 +60,6 @@ The output of the simulation will be a list of trips with the following informat
 - Type: string ("to_home" or "to_work")
 - Path: list of coordinates (lat, lon)
 - Timestamps: list of unix timestamps (one for each coordinate)
-
-[Visualization of trips in Kepler.gl:](https://simpletrips.netlify.app/)
-
-![Simulation](images/viz.gif)
 
 ## Related links
 
