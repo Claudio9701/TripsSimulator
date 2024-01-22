@@ -1,1 +1,2 @@
 data/trips.geojson filter=lfs diff=lfs merge=lfs -text
+data/trips.json filter=lfs diff=lfs merge=lfs -text

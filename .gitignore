@@ -165,6 +165,4 @@ cython_debug/
 # OSMnx
 cache/
 
-# Data
-*.json
 
