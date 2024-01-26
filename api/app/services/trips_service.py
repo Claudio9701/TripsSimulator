@@ -20,6 +20,36 @@ from tqdm import tqdm
 
 tqdm.pandas()
 
+# Download the Graph for the data area + 1km buffer using OSMnx
+area_of_interest = [
+    -77.0685986328125,
+    -12.055065023002463,
+    -77.04211914062499,
+    -12.032977469134593,
+]
+
+start = time.time()
+G = ox.graph_from_bboxpolygon(*area_of_interest, network_type="all")
+print(f"Downloaded graph in {time.time() - start} seconds")
+
+# Prepare the graph for routing
+
+# impute speed on all edges missing data
+hwy_speeds = {"residential": 35, "secondary": 50, "tertiary": 60}
+G = ox.add_edge_speeds(G, hwy_speeds)
+
+# calculate travel time (seconds) for all edges
+G = ox.add_edge_travel_times(G)
+
+# Get the graph node to query coordinates after routing
+nodes = G.nodes()
+nodes = pd.DataFrame.from_dict(nodes, orient="index")
+nodes = nodes.rename(columns={0: "x", 1: "y"})
+nodes.index.name = "osmid"
+# Create a GeoDataFrame from the nodes
+nodes = gpd.GeoDataFrame(nodes, geometry=gpd.points_from_xy(nodes.x, nodes.y))
+nodes.head()
+
 
 def generate_single_trip(
     G: ox.graph, nodes: gpd.GeoDataFrame, route: list, start_time: datetime
@@ -111,23 +141,6 @@ def generate_trips(
     """
     )
 
-    # Download the Graph for the data area + 1km buffer using OSMnx
-    buffer_diameter = 0.01
-    area_of_interest = data.geometry.unary_union.buffer(buffer_diameter / 2)
-
-    start = time.time()
-    G = ox.graph_from_polygon(area_of_interest, network_type="all")
-    print(f"Downloaded graph in {time.time() - start} seconds")
-
-    # Prepare the graph for routing
-
-    # impute speed on all edges missing data
-    hwy_speeds = {"residential": 35, "secondary": 50, "tertiary": 60}
-    G = ox.add_edge_speeds(G, hwy_speeds)
-
-    # calculate travel time (seconds) for all edges
-    G = ox.add_edge_travel_times(G)
-
     # Calculate the nearest nodes to the origins and destinations
     start = time.time()
     origins_nearest_nodes = pd.Series(ox.nearest_nodes(G, origins.x, origins.y))
@@ -148,15 +161,6 @@ def generate_trips(
         n=population_size, replace=True
     )
     print(f"Origins and destinations sampled in {time.time() - start} seconds")
-
-    # Get the graph node to query coordinates after routing
-    nodes = G.nodes()
-    nodes = pd.DataFrame.from_dict(nodes, orient="index")
-    nodes = nodes.rename(columns={0: "x", 1: "y"})
-    nodes.index.name = "osmid"
-    # Create a GeoDataFrame from the nodes
-    nodes = gpd.GeoDataFrame(nodes, geometry=gpd.points_from_xy(nodes.x, nodes.y))
-    nodes.head()
 
     # Create a dummy pd.Series to use pandarallel
     indexs_series = pd.Series(range(population_size))
