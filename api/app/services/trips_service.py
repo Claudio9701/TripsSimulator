@@ -167,7 +167,7 @@ def generate_trips(
     home_start_dts = pd.to_timedelta(return_hour, unit="h") + start_date
 
     # Generate the trips to work and to home
-    batch_size = 500
+    batch_size = 50
     num_batches = (population_size + batch_size - 1) // batch_size
 
     for batch_num in tqdm(range(num_batches)):
