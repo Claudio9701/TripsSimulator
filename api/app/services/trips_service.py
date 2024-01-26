@@ -1,3 +1,4 @@
+from typing import Optional
 import os
 import geopandas as gpd
 import pandas as pd
@@ -67,7 +68,7 @@ def generate_single_trip(
 
 def generate_trips(
     data: GeoJSON,
-    population_size: int | None = None,
+    population_size: Optional[int] = None,
     trips_per_person: int = 2,
     departure_hours: tuple = (6, 9),
     return_hours: tuple = (17, 20),
