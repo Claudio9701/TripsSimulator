@@ -10,7 +10,7 @@ from datetime import datetime
 from fastapi.encoders import jsonable_encoder
 
 # from pandarallel import pandarallel
-from ..models.geojson import GeoJSON
+from models.geojson import GeoJSON
 
 # Get number of available cores
 cores = os.cpu_count()

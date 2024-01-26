@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Response
 from fastapi.responses import StreamingResponse
 from typing import List
-from ..models.geojson import GeoJSON, Trips
-from ..services import trips_service
+from models.geojson import GeoJSON, Trips
+from services import trips_service
 
 router = APIRouter()
 
