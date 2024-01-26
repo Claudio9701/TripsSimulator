@@ -7,3 +7,4 @@ pydantic==1.10.0a1
 tqdm==4.66.1
 uvicorn
 urllib3==1.26.6
+scikit-learn
