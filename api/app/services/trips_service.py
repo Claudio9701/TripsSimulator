@@ -159,7 +159,7 @@ def generate_trips(
     nodes.head()
 
     # Create a dummy pd.Series to use pandarallel
-    indexs_series = pd.Series(range(len(population_size)))
+    indexs_series = pd.Series(range(population_size))
     # Convert the departure and return times to datetime
     today = datetime.today()
     start_date = datetime(today.year, today.month, today.day)
@@ -211,9 +211,7 @@ def generate_trips(
             )
             for i, batch_index in enumerate(batch_data.index)
         ]
-        home_trips_df = pd.DataFrame.from_records(
-            home_trips.values, index=batch_data.index
-        )
+        home_trips_df = pd.DataFrame.from_records(home_trips, index=batch_data.index)
         home_trips_df.index.name = "person_id"
         home_trips_df["type"] = "to_home"
 
