@@ -29,7 +29,7 @@ area_of_interest = [
 ]
 
 start = time.time()
-G = ox.graph_from_bboxpolygon(*area_of_interest, network_type="all")
+G = ox.graph_from_bbox(*area_of_interest, network_type="all")
 print(f"Downloaded graph in {time.time() - start} seconds")
 
 # Prepare the graph for routing
