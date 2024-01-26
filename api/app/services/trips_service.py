@@ -149,16 +149,6 @@ def generate_trips(
     )
     print(f"Origins and destinations sampled in {time.time() - start} seconds")
 
-    # Get the fastest route using OSMnx
-    start = time.time()
-    route_to_work = ox.shortest_path(
-        G, sampled_origins, sampled_destinations, weight="travel_time", cpus=cores
-    )
-    route_to_home = ox.shortest_path(
-        G, sampled_destinations, sampled_origins, weight="travel_time", cpus=cores
-    )
-    print(f"Found fastest routes in {time.time() - start} seconds")
-
     # Get the graph node to query coordinates after routing
     nodes = G.nodes()
     nodes = pd.DataFrame.from_dict(nodes, orient="index")
@@ -169,7 +159,7 @@ def generate_trips(
     nodes.head()
 
     # Create a dummy pd.Series to use pandarallel
-    indexs_series = pd.Series(range(len(route_to_work)))
+    indexs_series = pd.Series(range(len(population_size)))
     # Convert the departure and return times to datetime
     today = datetime.today()
     start_date = datetime(today.year, today.month, today.day)
@@ -186,24 +176,41 @@ def generate_trips(
 
         batch_data = indexs_series.iloc[start_index:end_index]
 
+        # Get the fastest route using OSMnx
+        start = time.time()
+        route_to_work = ox.shortest_path(
+            G,
+            sampled_origins[start_index:end_index],
+            sampled_destinations[start_index:end_index],
+            weight="travel_time",
+            cpus=cores,
+        )
+        route_to_home = ox.shortest_path(
+            G,
+            sampled_destinations[start_index:end_index],
+            sampled_origins[start_index:end_index],
+            weight="travel_time",
+            cpus=cores,
+        )
+        print(f"Found fastest routes in {time.time() - start} seconds")
+
         # Generate the trips to work and to home
-        work_trips = batch_data.progress_apply(
-            lambda i: generate_single_trip(
-                G, nodes, route=route_to_work[i], start_time=work_start_dts[i]
+        work_trips = [
+            generate_single_trip(
+                G, nodes, route=route_to_work[i], start_time=work_start_dts[batch_index]
             )
-        )
-        print("work trips", work_trips)
-        work_trips_df = pd.DataFrame.from_records(
-            work_trips.values, index=batch_data.index
-        )
+            for i, batch_index in enumerate(batch_data.index)
+        ]
+        work_trips_df = pd.DataFrame.from_records(work_trips, index=batch_data.index)
         work_trips_df.index.name = "person_id"
         work_trips_df["type"] = "to_work"
 
-        home_trips = batch_data.progress_apply(
-            lambda i: generate_single_trip(
-                G, nodes, route=route_to_home[i], start_time=home_start_dts[i]
+        home_trips = [
+            generate_single_trip(
+                G, nodes, route=route_to_home[i], start_time=home_start_dts[batch_index]
             )
-        )
+            for i, batch_index in enumerate(batch_data.index)
+        ]
         home_trips_df = pd.DataFrame.from_records(
             home_trips.values, index=batch_data.index
         )
